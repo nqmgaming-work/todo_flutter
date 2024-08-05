@@ -12,7 +12,6 @@ class Category {
     required this.icon,
     required this.colorCompleted,
     required this.colorUnCompleted,
-    isCompleted = false,
     required this.id,
   });
 

@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 class TodoTextField extends StatelessWidget {
   final TextEditingController textController;
   final String hintText;
+  final String? Function(String?)? validator;
+  final int maxLength;
+  final int maxLines;
 
   const TodoTextField({
     super.key,
     required this.textController,
     required this.hintText,
+    required this.validator,
+    this.maxLength = 100,
+    this.maxLines = 1,
   });
 
   @override
@@ -24,7 +30,10 @@ class TodoTextField extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         TextFormField(
+          cursorColor: Colors.indigo,
           controller: textController,
+          maxLength: maxLength,
+          maxLines: maxLines,
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: const TextStyle(
@@ -52,6 +61,7 @@ class TodoTextField extends StatelessWidget {
               ),
             ),
           ),
+          validator: validator,
         ),
       ],
     );
