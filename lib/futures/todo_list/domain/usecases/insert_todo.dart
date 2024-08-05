@@ -6,15 +6,14 @@ import 'package:todo_list/futures/todo_list/domain/repositories/todo_repository.
 import 'package:injectable/injectable.dart';
 
 @injectable
-class GetAllTodos implements UseCase<List<Todo>, NoParams> {
+class InsertTodo implements UseCase<Todo, Todo> {
   final TodoRepository todoRepository;
-
-  GetAllTodos({
+  InsertTodo({
     required this.todoRepository,
   });
-
   @override
-  Future<Either<Failure, List<Todo>>> call(NoParams params) async {
-    return await todoRepository.getAllTodos();
+  Future<Either<Failure, Todo>> call(Todo params) {
+    return todoRepository.insertTodo(todo: params);
   }
+
 }

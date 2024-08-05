@@ -1,6 +1,8 @@
+import 'package:injectable/injectable.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+@lazySingleton
 class AppDatabase {
   static final AppDatabase _instance = AppDatabase._internal();
   static Database? _database;
