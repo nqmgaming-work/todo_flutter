@@ -1,4 +1,4 @@
-import 'package:todo_list/futures/todo_list/domain/entities/category.dart';
+import 'package:flutter/material.dart';
 import 'package:todo_list/futures/todo_list/domain/entities/todo.dart';
 
 class TodoModel extends Todo {
@@ -19,9 +19,9 @@ class TodoModel extends Todo {
       id: map['id'] as String,
       taskTitle: map['taskTitle'] as String,
       taskDescription: map['taskDescription'] as String,
-      category: map['category'] as Category,
+      category: map['category'] as String,
       date: map['date'] as DateTime,
-      time: map['time'] as DateTime,
+      time: map['time'] as TimeOfDay,
       isCompleted: map['isCompleted'] as bool,
       createdAt: map['createdAt'] as DateTime,
       updatedAt: map['updatedAt'] as DateTime,

@@ -6,6 +6,10 @@ class TodoTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final int maxLength;
   final int maxLines;
+  final bool readOnly;
+  final VoidCallback? onTap;
+  final String value;
+  final TextInputAction textInputAction;
 
   const TodoTextField({
     super.key,
@@ -14,10 +18,15 @@ class TodoTextField extends StatelessWidget {
     required this.validator,
     this.maxLength = 100,
     this.maxLines = 1,
+    this.readOnly = false,
+    this.onTap,
+    this.value = '',
+    this.textInputAction = TextInputAction.next,
   });
 
   @override
   Widget build(BuildContext context) {
+    textController.text = value; // Update the text controller with the value
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -30,6 +39,9 @@ class TodoTextField extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         TextFormField(
+          textInputAction: TextInputAction.next,
+          onTap: onTap,
+          readOnly: readOnly,
           cursorColor: Colors.indigo,
           controller: textController,
           maxLength: maxLength,

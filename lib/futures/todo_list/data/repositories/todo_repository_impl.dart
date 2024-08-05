@@ -25,6 +25,7 @@ class TodoRepositoryImpl implements TodoRepository {
       final db = await _appDatabase.database;
       final todoDao = TodoDao(db);
       await todoDao.deleteTodo(todo.id);
+      print('deleteTodo');
       return Right(todo);
     } catch (e) {
       return Left(Failure(message: e.toString()));
@@ -46,6 +47,7 @@ class TodoRepositoryImpl implements TodoRepository {
   @override
   Future<Either<Failure, Todo>> insertTodo({required Todo todo}) async {
     try {
+      print('insertTodo');
       final db = await _appDatabase.database;
       final todoDao = TodoDao(db);
       await todoDao.insertTodo(todo);

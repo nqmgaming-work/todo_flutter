@@ -4,9 +4,8 @@ import 'package:todo_list/core/themes/app_palette.dart';
 import 'package:todo_list/core/utils/get_current_date.dart';
 import 'package:todo_list/futures/todo_list/domain/entities/todo.dart';
 import 'package:todo_list/futures/todo_list/presentation/bloc/todo_bloc.dart';
-import 'package:todo_list/futures/todo_list/presentation/pages/add_new_todo_page.dart';
+import 'package:todo_list/futures/todo_list/presentation/pages/add_new_or_update_todo_page.dart';
 import 'package:todo_list/futures/todo_list/presentation/widgets/todo_container.dart';
-
 
 class HomePage extends StatefulWidget {
   static route() => MaterialPageRoute(builder: (context) => const HomePage());
@@ -61,7 +60,7 @@ class _HomePageState extends State<HomePage> {
               ),
               IconButton(
                 onPressed: () {
-                  Navigator.push(context, AddNewTodoPage.route());
+                  Navigator.push(context, AddNewOrUpdateTodoPage.route());
                 },
                 icon: Container(
                   padding: const EdgeInsets.all(8),
@@ -90,7 +89,6 @@ class _HomePageState extends State<HomePage> {
                 }
               },
               builder: (context, state) {
-
                 if (state is TodoLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
@@ -150,17 +148,31 @@ class _HomePageState extends State<HomePage> {
                                         itemCount: uncompletedTodos.length,
                                         itemBuilder: (context, index) {
                                           return TodoCard(
+                                            onTap: (todo) {
+                                              Navigator.push(
+                                                context,
+                                                AddNewOrUpdateTodoPage.route(
+                                                    todo: todo),
+                                              );
+                                            },
                                             todo: uncompletedTodos[index],
                                             isLast: index ==
                                                 uncompletedTodos.length - 1,
                                             onDismissed: (id) {
                                               BlocProvider.of<TodoBloc>(context)
-                                                  .add(DeleteTodoEvent(
-                                                      todo: uncompletedTodos[
-                                                          index]));
+                                                  .add(
+                                                DeleteTodoEvent(
+                                                  todo: uncompletedTodos[index],
+                                                ),
+                                              );
                                             },
                                             onCompleted: (id, value) {
-                                              // onCompleted(id, value);
+                                              BlocProvider.of<TodoBloc>(context)
+                                                  .add(UpdateTodoEvent(
+                                                todo: uncompletedTodos[index]
+                                                    .copyWith(
+                                                        isCompleted: value),
+                                              ));
                                             },
                                           );
                                         },
@@ -231,6 +243,13 @@ class _HomePageState extends State<HomePage> {
                                         itemCount: completedTodos.length,
                                         itemBuilder: (context, index) {
                                           return TodoCard(
+                                            onTap: (todo) {
+                                              Navigator.push(
+                                                context,
+                                                AddNewOrUpdateTodoPage.route(
+                                                    todo: todo),
+                                              );
+                                            },
                                             todo: completedTodos[index],
                                             isLast: index ==
                                                 completedTodos.length - 1,
@@ -241,7 +260,12 @@ class _HomePageState extends State<HomePage> {
                                                           index]));
                                             },
                                             onCompleted: (id, value) {
-                                              //onCompleted(id, value);
+                                              BlocProvider.of<TodoBloc>(context)
+                                                  .add(UpdateTodoEvent(
+                                                todo: completedTodos[index]
+                                                    .copyWith(
+                                                        isCompleted: value),
+                                              ));
                                             },
                                           );
                                         },

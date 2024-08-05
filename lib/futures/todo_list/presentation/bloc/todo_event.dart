@@ -16,3 +16,9 @@ class DeleteTodoEvent extends TodoEvent {
 
   DeleteTodoEvent({required this.todo});
 }
+
+class UpdateTodoEvent extends TodoEvent {
+  final Todo todo;
+
+  UpdateTodoEvent({required this.todo});
+}
